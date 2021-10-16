@@ -15,7 +15,7 @@ router.post('/upload', async (req, res) => {
     const [, type] = formatREGEX.exec(req.files.file.name);
 
     try {
-        if (type === 'mp4') await fs.writeFile(`${process.cwd()}/src/files/${string}.mp4`)
+        if (type === 'mp4') await fs.writeFile(`${process.cwd()}/src/files/${string}.mp4`, req.files.file.data)
         else await fs.writeFile(`${process.cwd()}/src/files/${string}${type === 'gif' ? '.gif' : '.png'}`, req.files.file.data);
         
         return res.json({ URL: `https://${process.env.DOMAIN === 'localhost' ? `localhost:${process.env.PORT}` : process.env.DOMAIN}/${string}.${type}`});
