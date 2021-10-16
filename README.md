@@ -1,2 +1,2 @@
-# simplesharex
-An simple ShareX server ran with NodeJS.
+# SimpleShareX
+A simple ShareX server ran with NodeJS.

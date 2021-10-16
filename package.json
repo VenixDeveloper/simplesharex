@@ -1,0 +1,17 @@
+{
+  "name": "simplesharex",
+  "version": "0.0.1",
+  "description": "A simple ShareX server ran with NodeJS.",
+  "main": "src/index.js",
+  "repository": "https://github.com/venixdeveloper/simplesharex",
+  "license": "MIT",
+  "author": "Andreas C <me@venixdev.xyz>",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "fs-extra": "^10.0.0",
+    "nanoid": "^3.1.30"
+  }
+}
