@@ -3,24 +3,11 @@
     <head>
         <title>VenixDev Image Server</title>
 
-        <meta property="og:url" content="https://i.venixdev.xyz/<%= fileName %>">
         <meta property="og:title" content="VenixDev CDN">
+        <meta property="og:description" content="No such file was found.">
         <meta property="og:type" content="article">
         <meta name="theme-color" content="#008B8B">
-        <% if (format === 'mp4') { %>
-           <meta property='og:video' content="https://i.venixdev.xyz/raw/<%= fileName %>" />
-        <% } else { %>
-           <meta property="og:image" content="https://i.venixdev.xyz/raw/<%= fileName %>">
-           <meta property="og:image:width" content="<%= imgSize.width %>" />
-           <meta property="og:image:height" content="<%= imgSize.height %>" />
-        <meta name="twitter:card" content="summary_large_image">
-        <% } %>
         <meta name="author" content="VenixDev#3371">
-        <% if (format === 'mp4') { %>
-        <% } else { %>
-           <meta name="twitter:card" content="summary_large_image">
-           <meta property="twitter:image" content="https://i.venixdev.xyz/raw/<%= fileName %>">
-        <% } %>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500&display=swap');
 
@@ -49,11 +36,7 @@
         <div class="centerArea">
             <div class="textArea">
                 <h1>VenixDev CDN</h1>
-                <% if (format === 'mp4') { %>
-                    <embed src="/raw/<%= fileName %>" autostart="false" height="600" width="800" /></embed>
-                <% } else { %>
-                    <img src="/raw/<%= fileName %>" >
-                <% } %>
+                <p>Unauthorized</p>
             </div>
         </div>
     </body>

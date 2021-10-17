@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
+const sizeOf = require('image-size');
 const fileUpload = require('express-fileupload');
 const app = express()
 
@@ -10,32 +11,29 @@ const formatREGEX = /\.(gif|jpg|jpeg|tiff|png|mp4)$/i;
 app.use(fileUpload());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('files', path.join(__dirname, 'files'));
 app.use('/api/', require('./routes/api'));
 
 app.get('/', (req, res) => {
-    res.status(200).json({ error: false, message: 'Welcome to VenixDev\'s ShareX Server 👋' });
+    res.status(200).render('home');
 });
 
 app.get('/:file', async (req, res) => {
     const exist = await fs.exists(`${process.cwd()}/src/files/${req.params.file}`);
-    if (!exist) return res.status(404).json({ error: true, message: 'No file with such name was found!'});
+    if (!exist) return res.status(404).render('nofile');
 
     const [, format] = formatREGEX.exec(req.params.file);
 
-    /*
-    if (format === 'gif') res.writeHead(200, { "Content-Type": "image/gif" });
-    else if (format === 'mp4') res.writeHead(200, { "Content-Type": "video/mp4" });
-    else res.writeHead(200, { "Content-Type": "image/png" });
-    */
+    let imgSize = null;
+    if (format === 'png') {
+        imgSize = sizeOf(`${process.cwd()}/src/files/${req.params.file}`);
+    }
 
     const fileName = `${req.params.file}`;
-    const imgData = fs.readFileSync(`${process.cwd()}/src/files/${req.params.file}`);
     res.render('file', {
         fileName: fileName,
-        format: format
+        format: format,
+        imgSize: imgSize
     });
-    // return fs.createReadStream(`${process.cwd()}/src/files/${req.params.file}`).pipe(res);
 });
 
 app.get('/raw/:file', async (req, res) => {
@@ -46,12 +44,13 @@ app.get('/raw/:file', async (req, res) => {
     if (format === 'gif') res.writeHead(200, { "Content-Type": "image/gif" });
     else if (format === 'mp4') res.writeHead(200, { "Content-Type": "video/mp4" });
     else res.writeHead(200, { "Content-Type": "image/png" });
+    
 
     return fs.createReadStream(`${process.cwd()}/src/files/${req.params.file}`).pipe(res);
 })
 
 app.get('*', (req, res) => {
-    res.status(403).json({error: true, message: 'Unauthorized'})
+    res.status(403).render('unauthorized');
 })
 
 app.listen(process.env.PORT ?  process.env.PORT : 3000);

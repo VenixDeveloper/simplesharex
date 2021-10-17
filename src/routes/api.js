@@ -28,4 +28,8 @@ router.post('/upload', async (req, res) => {
     }
 });
 
+router.get('/upload', (req, res) => {
+    return res.status('301').redirect('/');
+})
+
 module.exports = router;
