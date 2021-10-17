@@ -6,7 +6,7 @@ const sizeOf = require('image-size');
 const fileUpload = require('express-fileupload');
 const app = express()
 
-const formatREGEX = /\.(gif|jpg|jpeg|tiff|png|mp4)$/i;
+const formatREGEX = /\.(gif|jpg|png|mp4)$/i;
 
 app.use(fileUpload());
 app.set('view engine', 'ejs');
@@ -24,7 +24,7 @@ app.get('/:file', async (req, res) => {
     const [, format] = formatREGEX.exec(req.params.file);
 
     let imgSize = null;
-    if (format === 'png') {
+    if (format === 'png' || 'jpg') {
         imgSize = sizeOf(`${process.cwd()}/src/files/${req.params.file}`);
     }
 

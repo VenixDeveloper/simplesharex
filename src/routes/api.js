@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const { nanoid } = require("nanoid");
 const router = express.Router();
 
-const formatREGEX = /\.(gif|jpg|jpeg|tiff|png|mp4)$/i;
+const formatREGEX = /\.(gif|jpg|png|mp4)$/i;
 
 router.get('/', (req, res) => res.status(200).json({error: false, message: 'What are you doing here?'}));
 
@@ -16,7 +16,9 @@ router.post('/upload', async (req, res) => {
 
     try {
         if (type === 'mp4') await fs.writeFile(`${process.cwd()}/src/files/${string}.mp4`, req.files.file.data)
-        else await fs.writeFile(`${process.cwd()}/src/files/${string}${type === 'gif' ? '.gif' : '.png'}`, req.files.file.data);
+        else if (type === 'gif') await fs.writeFile(`${process.cwd()}/src/files/${string}.gif`, req.files.file.data);
+        else if (type === 'jpg') await fs.writeFile(`${process.cwd()}/src/files/${string}.jpg`, req.files.file.data);
+        else await fs.writeFile(`${process.cwd()}/src/files/${string}.png`, req.files.file.data);
         
         return res.json({ URL: `https://${process.env.DOMAIN === 'localhost' ? `localhost:${process.env.PORT}` : process.env.DOMAIN}/${string}.${type}`});
     } catch (err) {
@@ -27,9 +29,5 @@ router.post('/upload', async (req, res) => {
         });
     }
 });
-
-router.get('/upload', (req, res) => {
-    return res.status('301').redirect('/');
-})
 
 module.exports = router;
