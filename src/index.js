@@ -24,7 +24,11 @@ app.get('/:file', async (req, res) => {
     const [, format] = formatREGEX.exec(req.params.file);
 
     let imgSize = null;
-    if (format === 'png' || 'jpg') {
+    if (format === 'png') {
+        imgSize = sizeOf(`${process.cwd()}/src/files/${req.params.file}`);
+    } else if (format === 'jpg') {
+        imgSize = sizeOf(`${process.cwd()}/src/files/${req.params.file}`);
+    } else if (format === 'gif') {
         imgSize = sizeOf(`${process.cwd()}/src/files/${req.params.file}`);
     }
 
