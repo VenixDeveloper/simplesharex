@@ -1,0 +1,13 @@
+{
+  "Version": "13.6.1",
+  "Name": "SimpleShareX",
+  "DestinationType": "ImageUploader, FileUploader",
+  "RequestMethod": "POST",
+  "RequestURL": "https://example.com/api/upload",
+  "Headers": {
+    "key": "YourKeyFromEnv"
+  },
+  "Body": "MultipartFormData",
+  "FileFormName": "file",
+  "URL": "$json:URL$"
+}
